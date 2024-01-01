@@ -1,3 +1,4 @@
 openai
 llama-index
 streamlit
+ntlk
