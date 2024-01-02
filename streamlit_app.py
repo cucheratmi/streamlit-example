@@ -6,14 +6,14 @@ from llama_index import SimpleDirectoryReader
 from llama_index import download_loader
 import os
 
-st.set_page_config(page_title="SFPT pharmacovid", layout="centered",initial_sidebar_state="auto", menu_items=None)
+st.set_page_config(page_title="SFPT pharmaCovid", layout="centered",initial_sidebar_state="auto", menu_items=None)
 
 st.title("Médicaments & COVID")
-st.info("les pages [pharmacovid](https://sfpt-fr.org/covid19)")
+st.info("les pages [pharmaCovid](https://sfpt-fr.org/covid19)")
 
 if "messages" not in st.session_state.keys():  # Initialize the chat messages history
     st.session_state.messages = [
-        {"role": "assistant", "content": "Posez moi une question sur les médicaments de la COVID!"}
+        {"role": "assistant", "content": "Posez moi une question sur médicaments et COVID!"}
     ]
 
 
@@ -42,7 +42,8 @@ def load_data():
                 system_prompt="You are an expert on pharmacology and covid and your job is to answer technical questions. Assume that all questions are related to the covid. Keep your answers technical and based on facts – do not hallucinate features."
                 )
         )
-        SimpleWebPageReader = download_loader("SimpleWebPageReader")
+        dir_tempo = "./tempo"
+        SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path=dir_tempo)
         loader = SimpleWebPageReader()
         documents = loader.load_data(urls=urls)
         index = VectorStoreIndex.from_documents(documents, service_context=service_context)
