@@ -42,8 +42,7 @@ def load_data():
                 system_prompt="You are an expert on pharmacology and covid and your job is to answer technical questions. Assume that all questions are related to the covid. Keep your answers technical and based on facts – do not hallucinate features."
                 )
         )
-        dir_tempo = "./tempo"
-        SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path=dir_tempo)
+        SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path="./tempo")
         loader = SimpleWebPageReader()
         documents = loader.load_data(urls=urls)
         index = VectorStoreIndex.from_documents(documents, service_context=service_context)
