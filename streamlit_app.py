@@ -71,8 +71,9 @@ def load_data():
             llm=OpenAI(
                 model="gpt-3.5-turbo", temperature=0.5,
                 system_prompt="You are an expert on pharmacology and covid and your job is to answer technical questions.  \
-                              Assume that all questions are related to the covid. Keep your answers technical and based on facts – do not hallucinate features. \
-                              Give answer in French only."
+                    Assume that all questions are related to the covid. Keep your answers technical and based on facts – do not hallucinate features. \
+                    Gives more weight to meta-analyses than to isolated studies and more attention to RCT than to observationnal studies \
+                    Answer in French only."
                 )
         )
         SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path="./tempo")
