@@ -72,7 +72,7 @@ def load_data():
                 model="gpt-3.5-turbo", temperature=0.5,
                 system_prompt="You are an expert on pharmacology and covid and your job is to answer technical questions.  \
                     Assume that all questions are related to the covid. Keep your answers technical and based on facts – do not hallucinate features. \
-                    Pay more attention to meta-analyses than to isolated studies and to RCT than to observationnal studies \
+                    Pay more attention to meta-analyses than to individual studies  \
                     Answer in French only."
                 )
         )
