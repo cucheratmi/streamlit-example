@@ -8,9 +8,9 @@ import os
 
 st.set_page_config(page_title="SFPT pharmaCovid", layout="centered",initial_sidebar_state="auto", menu_items=None)
 
-st.subheader("Société Française de Pharmacologie et de Thérapeutique ")
+st.subheader("Société Française de Pharmacologie et de Thérapeutique ([SFPT](https://sfpt-fr.org/))")
 st.title("FAQ médicaments, vaccins et COVID")
-st.info("""La Société Française de Pharmacologie et de Thérapeutique""")
+st.info("""Cette IA permet une recherche sémantique en langage naturel dans les foires aux questions [médicaments et COVID](https://sfpt-fr.org/covid19) et [vaccins et COVID](https://sfpt-fr.org/faq-vaccins) de la SFPT """)
 
 
 if "messages" not in st.session_state.keys():  # Initialize the chat messages history
