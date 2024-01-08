@@ -5,6 +5,8 @@ import openai
 from llama_index import SimpleDirectoryReader
 from llama_index import download_loader
 import os
+from llama_index.retrievers import VectorIndexRetriever
+from llama_index.query_engine import RetrieverQueryEngine
 
 st.set_page_config(page_title="SFPT pharmaCovid", layout="centered",initial_sidebar_state="auto", menu_items=None)
 
@@ -69,7 +71,7 @@ def load_data():
 
         service_context = ServiceContext.from_defaults(
             llm=OpenAI(
-                model="gpt-3.5-turbo", temperature=0.5,
+                model="gpt-3.5-turbo", temperature=0.0,
                 system_prompt="You are an expert on pharmacology and covid and your job is to answer technical questions.  \
                     Assume that all questions are related to the covid. Keep your answers technical and based on facts – do not hallucinate features. \
                     Pay more attention to meta-analyses than to individual studies  \
@@ -80,6 +82,8 @@ def load_data():
         loader = SimpleWebPageReader()
         documents = loader.load_data(urls=urls+url2s)
         index = VectorStoreIndex.from_documents(documents, service_context=service_context)
+
+
         return index
 
 
@@ -88,7 +92,15 @@ index = load_data()
 #if "chat_engine" not in st.session_state.keys():  # Initialize the chat engine
 #    st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
 if "query_engine" not in st.session_state.keys():  # Initialize the chat engine
-    st.session_state.query_engine = index.as_query_engine()
+    retriever = VectorIndexRetriever(
+        index=index,
+        similarity_top_k=4,
+    )
+    #st.session_state.query_engine = index.as_query_engine()
+    st.session_state.query_engine = RetrieverQueryEngine.from_args(
+                retriever,
+                response_mode="tree_summarize",
+            )
 
 if prompt := st.chat_input("Votre question"):  # Prompt for user input and save to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -103,6 +115,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("En reflexion ..."):
             #response = st.session_state.chat_engine.chat(prompt)
             response = st.session_state.query_engine.query(prompt)
+
             st.write(response.response)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message)  # Add response to message history
