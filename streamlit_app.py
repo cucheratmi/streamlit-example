@@ -94,7 +94,7 @@ index = load_data()
 if "query_engine" not in st.session_state.keys():  # Initialize the chat engine
     retriever = VectorIndexRetriever(
         index=index,
-        similarity_top_k=4,
+        similarity_top_k=6,
     )
     #st.session_state.query_engine = index.as_query_engine()
     st.session_state.query_engine = RetrieverQueryEngine.from_args(
